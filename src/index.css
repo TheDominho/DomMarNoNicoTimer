@@ -1,0 +1,436 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #f5f7ff;
+  background: #000000;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #050505 0%, #000000 70%);
+}
+
+button {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ambient {
+  display: none;
+}
+
+.scene {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 860px);
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.headline-block {
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.78rem;
+  color: #8bd3ff;
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0 auto 1.75rem;
+  max-width: 38rem;
+  color: #c7d2fe;
+}
+
+.timer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timer-block {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: riseIn 0.8s ease both;
+}
+
+.timer-block:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.timer-block:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.timer-block:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.value {
+  display: block;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 700;
+}
+
+.label {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: #9fb0d2;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6d5dfc, #2dd4bf);
+  color: white;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 10px 24px rgba(109, 93, 252, 0.2);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(109, 93, 252, 0.3);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-pill.live {
+  background: rgba(45, 212, 191, 0.18);
+  color: #8ff2e2;
+}
+
+.status-pill.paused {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+}
+
+.countdown-summary {
+  margin: 0 auto 1.2rem;
+  color: #fef3c7;
+  font-weight: 600;
+  font-size: 1rem;
+  max-width: 40rem;
+}
+
+.rocket-stack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 0.8rem 0 1.25rem;
+  min-height: 4.6rem;
+  position: relative;
+}
+
+.rocket-card {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.rocket-card-left {
+  transform: translateX(-2px);
+}
+
+.rocket-card-right {
+  transform: translateX(2px);
+}
+
+.rocket-name {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.rocket-emoji {
+  font-size: 1.35rem;
+  transform: translateY(0);
+  animation: rocketBob 1.2s ease-in-out infinite;
+}
+
+.rocket-flare {
+  position: absolute;
+  left: -0.55rem;
+  top: 50%;
+  width: 1.4rem;
+  height: 1.4rem;
+  transform: translateY(-50%) rotate(45deg);
+  background: radial-gradient(circle, rgba(255, 179, 71, 0.95) 0%, rgba(255, 120, 0, 0.3) 55%, transparent 70%);
+  filter: blur(6px);
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.starfield {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.star {
+  position: absolute;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 1), 0 0 24px rgba(255, 255, 255, 0.65);
+  opacity: 0;
+  animation-name: starDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.status-text {
+  margin: 0;
+  color: #dbeafe;
+}
+
+.rocket-image {
+  width: 20%;
+  margin-bottom: 1rem;
+}
+
+.rocket-container {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@keyframes spaceFloat {
+    0% {
+        transform: rotate(-1deg) translate(0, 0);
+    }
+    25% {
+        transform: rotate(1deg) translate(3px, -8px);
+    }
+    50% {
+        transform: rotate(-1deg) translate(0, -16px);
+    }
+    75% {
+        transform: rotate(1deg) translate(-3px, -8px);
+    }
+    100% {
+        transform: rotate(-1deg) translate(0, 0);
+    }
+}
+
+.rocket1 {
+    animation: spaceFloat 2.6s ease-in-out infinite;
+}
+
+.rocket2 {
+    animation: spaceFloat 3.4s ease-in-out infinite;
+    animation-delay: 0.8s;
+}
+
+.rocketWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* Trail behind rocket */
+.rocketWrapper::after {
+    content: "";
+    position: absolute;
+
+    /* start directly behind rocket */
+    right: 50%;
+    top: 40%;
+
+    width: 1000px;
+    height: 20px;
+
+    transform: translateY(-50%);
+
+    background: linear-gradient(
+        to left,
+        rgba(255,255,255,0.8),
+        rgba(120,200,255,0.4),
+        transparent
+    );
+
+    border-radius: 50%;
+    filter: blur(3px);
+
+    z-index: -1;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(16px, -24px, 0) scale(1.08);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes starDrift {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-140vw, 0, 0) scale(1.15);
+  }
+}
+
+@keyframes rocketFlightLeft {
+  0% {
+    transform: translateX(-140%) translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(0) translateY(-8px);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(140%) translateY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes rocketFlightRight {
+  0% {
+    transform: translateX(-140%) translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(0) translateY(8px);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(140%) translateY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes rocketBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 640px) {
+  .scene {
+    padding: 1.4rem 1rem 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .timer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rocket-row {
+    gap: 0.75rem;
+  }
+
+  .rocket-badge {
+    padding: 0.65rem 0.8rem;
+  }
+}
