@@ -279,13 +279,13 @@ function App() {
           <div className="rocketWrapper top">
             <img
             className="rocket-image rocket1"
-            src="/images/brh1.png"
+            src={`${import.meta.env.BASE_URL}images/brh1.png`}
             alt="Dominova raketa"/>
           </div>
           <div className="rocketWrapper bottom">
               <img
               className="rocket-image rocket2"
-              src="/images/brh2.png"
+              src={`${import.meta.env.BASE_URL}images/brh2.png`}
               alt="Marekova raketa"/>
           </div>
         </div>
