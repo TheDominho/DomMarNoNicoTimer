@@ -294,3 +294,9 @@ h1 {
     opacity: 0;
   }
 }
+
+@media (max-width: 768px) {
+    .rocketWrapper::after {
+        display: none;
+    }
+}
