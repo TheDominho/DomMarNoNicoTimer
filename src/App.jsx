@@ -13,13 +13,83 @@ function getTimeParts(now = new Date()) {
   return { days, hours, minutes, seconds };
 }
 
-function getPositions (distance) {
-}
+function getPosition (distance) {
+  if (distance < 77_000_000) {
+    return [
+      "To predstavuje vzdialenosť stále menšiu ako je medzi zemou a merkúrom.",
+      "Ale za to viacej jak medzi nami a frajerkami.",
+      "AENE"
+    ];
+  }
+
+  if (distance < 170_000_000) {
+    return [
+      "Práve míňame Merkúr a smerujeme k Venuši.",
+      "Prešli sme určite už 733333333 futbalových ihrísk.",
+      "HAALAND HAAALAND"
+    ];
+  }
+
+  if (distance < 225_000_000) {
+    return [
+      "Sme približne pri Venuši.",
+      "Opaaa",
+      "Sme skoro na dĺžke mojich schopností vibe kódiť."
+    ];
+  }
+
+  if (distance < 778_000_000) {
+    return [
+      "Smerujeme k Marsu.",
+      "Budeme tam skorej jak Elon?",
+      "Napíš do komentárov."
+    ];
+  }
+
+  if (distance < 1_430_000_000) {
+    return [
+      "Opustili sme vnútorné planéty a letíme k Jupiteru.",
+      "Celkom štreka.",
+      "Možno by som aj nabil jedno oslavné, AENE."
+    ];
+  }
+
+  if (distance < 2_870_000_000) {
+    return [
+      "Sme na ceste k Saturnu.",
+      "Už ani neviem, čo je to nikotín.",
+      "Hilfe hilfe"
+    ];
+  }
+
+   if (distance < 4_500_000_000) {
+    return [
+      "Smerujeme k Uránu.",
+      "Žiadne anal joky, na to sme tu už moc dlho.",
+      "Stále kratšie, jak Marek bez Zuzy, teda, čo ? Bahaha"
+    ];
+  }
+
+  if (distance < 5_900_000_000) {
+    return [
+      "Blížime sa k Neptúnu.",
+      "Už mi dochádzajú vety na písanie.",
+      "Snáď mi zrúbu server, dokiaľ sa dostaneme sem."
+    ];
+  }
+
+  return [
+      "Dorazili sme až za Pluto 🚀",
+      "Som ochotný povedať ...",
+      "... že už asi nenabijem nikdy."
+    ];
+};
 
 function App() {
   const [isRunning, setIsRunning] = useState(true);
   const [time, setTime] = useState(() => getTimeParts());
-  const [positions, setPositions] = useState(() => getPositions(time))
+  const [sentenceIndex, setSentenceIndex] = useState(0);
+  const [fade, setFade] = useState(false);
 
   useEffect(() => {
     if (!isRunning) {
@@ -32,26 +102,34 @@ function App() {
 
     return () => window.clearInterval(intervalId);
   }, [isRunning]);
+  
+  const distance = useMemo(() => {
+    const { days, hours, minutes, seconds } = time;
+    return Math.floor((days * 86400 + hours * 3600 + minutes * 60 + seconds) * 15.4);
+  }, [time]);
+  const position = useMemo(() => getPosition(distance), [distance]);
+  useEffect(() => {
+    if (!position.length) return;
+    const interval = setInterval(() => {
+      setFade(true);
+
+      setTimeout(() => {
+        setSentenceIndex(prev => (prev + 1) % position.length);
+        setFade(false);
+      }, 1000);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [position.length]);
 
   const statusMessage = useMemo(() => {
-    const { days, hours, minutes, seconds } = time;
-
-    var message =`Ak to prepočítame na rýchlosť Voyager-a 2, tak to je ${Math.floor((days * 86400 + hours * 3600 + minutes * 60 + seconds) * 15.4)} kilometrová cesta.`;
-
-    return message;
-  }, [time]);
+    return `Ak to prepočítame na rýchlosť Voyager-a 2, tak to je ${distance} kilometrová cesta.`;
+  }, [distance]);
 
   const countdownSummary = useMemo(() => {
     const { days, hours, minutes, seconds } = time;
 
     return `Domino a Marek sú bez žuvaku už ${String(days).padStart(2, '0')}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
   }, [time]);
-
-  // const funFactMessage = useMemo (() => {
-
-  //   var objects = getPositions()
-  //   var message = 
-  // });
 
   return (
     <main className="page-shell">
@@ -198,22 +276,21 @@ function App() {
         </div>
         
         <div className="rocket-container">
-
-          <div className="rocketWrapper">
+          <div className="rocketWrapper top">
             <img
             className="rocket-image rocket1"
-            src="src/images/domnob.png"
+            src="/images/brh1.png"
             alt="Dominova raketa"/>
-            </div>
-
-            <div className="rocketWrapper">
+          </div>
+          <div className="rocketWrapper bottom">
               <img
               className="rocket-image rocket2"
-              src="src/images/marnob.png"
+              src="/images/brh2.png"
               alt="Marekova raketa"/>
-              </div>
-</div>
+          </div>
+        </div>
         <p className="status-text">{statusMessage}</p>
+       <p className={`status-text special ${fade ? "fade" : ""}`}>{position[sentenceIndex]}</p>
       </section>
     </main>
   );

@@ -20,10 +20,6 @@ body {
   background: radial-gradient(circle at top, #050505 0%, #000000 70%);
 }
 
-button {
-  font: inherit;
-}
-
 #root {
   min-height: 100vh;
 }
@@ -36,10 +32,6 @@ button {
   padding: 2rem;
   position: relative;
   overflow: hidden;
-}
-
-.ambient {
-  display: none;
 }
 
 .scene {
@@ -55,14 +47,6 @@ button {
   margin-bottom: 1.5rem;
 }
 
-.eyebrow {
-  margin: 0 0 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.32em;
-  font-size: 0.78rem;
-  color: #8bd3ff;
-}
-
 h1 {
   margin: 0 0 0.75rem;
   font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -75,142 +59,12 @@ h1 {
   color: #c7d2fe;
 }
 
-.timer-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  max-width: 620px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.timer-block {
-  padding: 1rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  animation: riseIn 0.8s ease both;
-}
-
-.timer-block:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.timer-block:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.timer-block:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-.value {
-  display: block;
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 700;
-}
-
-.label {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: 0.9rem;
-  color: #9fb0d2;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
-  margin-bottom: 0.75rem;
-}
-
-button {
-  border: 0;
-  border-radius: 999px;
-  padding: 0.7rem 1.2rem;
-  cursor: pointer;
-  background: linear-gradient(135deg, #6d5dfc, #2dd4bf);
-  color: white;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-  box-shadow: 0 10px 24px rgba(109, 93, 252, 0.2);
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(109, 93, 252, 0.3);
-}
-
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.status-pill.live {
-  background: rgba(45, 212, 191, 0.18);
-  color: #8ff2e2;
-}
-
-.status-pill.paused {
-  background: rgba(255, 255, 255, 0.1);
-  color: #e5e7eb;
-}
-
 .countdown-summary {
   margin: 0 auto 1.2rem;
   color: #fef3c7;
   font-weight: 600;
   font-size: 1rem;
   max-width: 40rem;
-}
-
-.rocket-stack {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.25rem;
-  margin: 0.8rem 0 1.25rem;
-  min-height: 4.6rem;
-  position: relative;
-}
-
-.rocket-card {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.75rem 1rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
-  white-space: nowrap;
-  z-index: 2;
-}
-
-.rocket-card-left {
-  transform: translateX(-2px);
-}
-
-.rocket-card-right {
-  transform: translateX(2px);
-}
-
-.rocket-name {
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-.rocket-emoji {
-  font-size: 1.35rem;
-  transform: translateY(0);
-  animation: rocketBob 1.2s ease-in-out infinite;
 }
 
 .rocket-flare {
@@ -249,16 +103,17 @@ button:hover {
 .status-text {
   margin: 0;
   color: #dbeafe;
+  margin-bottom: 3rem;
 }
 
 .rocket-image {
   width: 20%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .rocket-container {
   margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
   width: auto;
   display: flex;
   justify-content: center;
@@ -293,9 +148,14 @@ button:hover {
     animation-delay: 0.8s;
 }
 
-.rocketWrapper {
-    position: relative;
-    display: inline-block;
+.rocketWrapper.top::after {
+    top: 32%;   /* adjust for first rocket */
+    right: 60%;
+}
+
+.rocketWrapper.bottom::after {
+    top: 50%;   /* adjust for second rocket */
+    right: 60%;
 }
 
 
@@ -303,10 +163,6 @@ button:hover {
 .rocketWrapper::after {
     content: "";
     position: absolute;
-
-    /* start directly behind rocket */
-    right: 50%;
-    top: 40%;
 
     width: 1000px;
     height: 20px;
@@ -415,22 +271,26 @@ button:hover {
   }
 }
 
-@media (max-width: 640px) {
-  .scene {
-    padding: 1.4rem 1rem 1rem;
-    display: flex;
-    justify-content: center;
-  }
+.status-text.special {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
 
-  .timer-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.status-text.special.fade {
+  opacity: 0;
+}
 
-  .rocket-row {
-    gap: 0.75rem;
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
   }
-
-  .rocket-badge {
-    padding: 0.65rem 0.8rem;
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
